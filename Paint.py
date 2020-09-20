@@ -23,9 +23,9 @@ class Window(QMainWindow):
         self.selectedTop = [] # list for two connected tops type - Top
 
     def buildGUI(self):
-        self.resize(600,600)
+        self.resize(1000, 750)
 
-        self.image = QImage(self.size(), QImage.Format_RGB32)
+        self.image = QImage(2000, 2000, QImage.Format_RGB32)
         self.image.fill(Qt.white)
         self.brushSize = 2
         self.brushColor = Qt.blue
@@ -136,7 +136,7 @@ class Window(QMainWindow):
 
     def paintEvent(self, event):
         canvasPainter = QPainter(self)
-        canvasPainter.drawImage(self.rect(), self.image, self.image.rect())
+        canvasPainter.drawImage(self.image.rect(), self.image, self.image.rect())
 
     def pen(self, painter):
         painter.setPen(
