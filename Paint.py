@@ -6,6 +6,7 @@ from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtCore import Qt, QPointF, QRectF
 from Graph import Top, Graph
 import Constant, random
+import math
 
 # генератор работает на списках. Не использовать! Do not use!
 # подсчитать путь
@@ -92,7 +93,14 @@ class Window(QMainWindow):
                 # check for excisting the road
                 #if not top1.exsitRoad(top2):
                 if not self.graph.exsitRoad(top1, top2):
-                    painter.drawLine(top1.x(), top1.y(), top2.x(), top2.y())
+                    X = top2.x() - top1.x()
+                    Y = top2.y() - top1.y()
+                    verticeDist = math.sqrt(X*X + Y*Y)
+                    cos = X / verticeDist
+                    sin = Y / verticeDist
+                    startPoint = QPointF(top1.x() + cos*(verticeDist - Constant.rad/2), top1.y() + sin*(verticeDist - Constant.rad/2))
+                    endPoint = QPointF(top1.x() + cos*Constant.rad/2, top1.y() + sin*Constant.rad/2)
+                    painter.drawLine(startPoint.x(), startPoint.y(), endPoint.x(), endPoint.y())
 
                     # target - add first top (top1) connected top (top2) in the list
                     # bilaterial
